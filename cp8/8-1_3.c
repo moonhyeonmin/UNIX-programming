@@ -47,7 +47,7 @@ int main(void){
     kill(pid, SIGUSR1);
     sleep(1);
     kill(pid, SIGUSR2);
-    sleep(1);
+    kill(pid, SIGINT);
 
     wait(&status);
     printf("exit status=%d\n", WEXITSTATUS(status));
