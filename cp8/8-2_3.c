@@ -17,6 +17,7 @@ void catchint(int);
 
 int main(void){
     int i, j, num[10], sum = 0;
+    pid_t pid;
     sigset_t mask;
     static struct sigaction act;
 
@@ -25,8 +26,12 @@ int main(void){
 
     sigemptyset(&mask);
     sigaddset(&mask, SIGINT);
+    sigaddset(&mask, SIGUSR1);
 
-    for(i=0;i<5;i++){
+
+    pid=fork();
+    if(pid==0){
+        for(i=0;i<5;i++){
         sigprocmask(SIG_SETMASK, &mask, NULL);
         scanf("%d", &num[i]);
         sigprocmask(SIG_UNBLOCK, &mask, NULL);
@@ -34,9 +39,17 @@ int main(void){
         for(j=0;j<=i;j++){
             printf("... %d\n", num[j]);
             sleep(1);
+            }
         }
+
+        exit(0);
+    }
+    else{
+        sleep(2);
+        kill(pid, SIGUSR1);
     }
 
+    wait(0);
     exit(0);
 }
 

@@ -32,7 +32,6 @@ int main(void) {
     }
 
     printf("process %d waiting...\n", getpid());
-    sleep(5);
     semop(semid, &p_buf, 1);
     printf("process %d exit\n", getpid());
     return 0;
