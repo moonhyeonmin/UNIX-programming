@@ -46,6 +46,7 @@ int main(void){
     }
     else{
         sleep(2);
+        kill(pid, SIGINT);
         kill(pid, SIGUSR1);
     }
 
